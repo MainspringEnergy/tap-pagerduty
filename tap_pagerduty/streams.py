@@ -207,13 +207,6 @@ class IncidentsStream(PagerdutyStream):
                                 "offset": 0,
                                 "time_zone": "UTC"
                             }
-                            record['log_entries'] = []
-                            for page in self._list_resource(url_suffix=f"/{self.tap_stream_id}/{record.get('id')}/log_entries", params=substream_params):
-                                record['log_entries'].extend(page.get('log_entries'))
-
-                            record['alerts'] = []
-                            for page in self._list_resource(url_suffix=f"/{self.tap_stream_id}/{record.get('id')}/alerts", params=substream_params):
-                                record['alerts'].extend(page.get('alerts'))
 
                             if self.replication_method == 'INCREMENTAL':
                                 if (current_bookmark_dtime is None) or (record_replication_key_dtime >= current_bookmark_dtime):
